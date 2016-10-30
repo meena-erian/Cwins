@@ -1,25 +1,37 @@
+/**                                StringFormating.h                               **/
+/**  Source:https://github.com/meena-hanna/Cwins                                   **/
+/**  Required Libraries: <sstream.h>                                               **/
+/**  License: GNU GPL v3                                                           **/
+#include <sstream>
 
+const std::string STR; //global string object
+const std::string str; //global string object
 
-const std::string STR;
-std::string UCase(std::string Str);
-std::string LCase(std::string Str);
-std::string ReversOrder(const std::string&s1);
-std::string CutStr(const std::string&Str, unsigned FirstChar, const unsigned LastChar=-1);
-std::string Remove(const std::string&s, const char&c);
-std::string Remove(const std::string&s, const unsigned&FirstChar, const unsigned&LastChar);
-std::string Remove(const std::string&s, const std::string&s2);
+/** Functions declaration                                                          **/
+std::string UCase(std::string Str); //copy and change to upper case
+std::string LCase(std::string Str); //copy and change to lower case
+std::string ReversOrder(const std::string&s1); //copy and reverse character order
+std::string CutStr(const std::string&Str, unsigned FirstChar, const unsigned LastChar=-1); //copy a substring from a string by specifying starting point and ending point
+std::string Remove(const std::string&s, const char&c); //copy and remove the first occurrence of a specific character value
+std::string Remove(const std::string&s, const unsigned&FirstChar, const unsigned&LastChar); //copy and remove a specific substring specified by two indexes
+std::string Remove(const std::string&s, const std::string&s2); //copy and remove the first occurrence of the substring s2
+std::string GetFirstWord(std::string & Statement); //Returns the first group of characters separated by space, '\t' or '\r' and removes it from the original string
+/** End Functions declarations                                                     **/
 
+/** Operators declaration                                                          **/
 std::string operator+(const std::string s, const int i);
-std::string operator+(const int i, const std::string s);
-std::string operator-(const std::string&s, const std::string&s1);
-std::string operator-(const std::string&s, const char&c);
-std::string operator*(const std::string&s, const unsigned&times);
-std::string operator!(const std::string&s);
-std::string operator++(const std::string&s);
-std::string operator--(const std::string&s);
-std::string operator<<(const std::string&s, const unsigned&i);
-std::string operator>>(const unsigned&i, const std::string&s);
-string GetFirstWord(string & Statement);
+std::string operator+(const int i, const std::string s); //Example: "(" + 2 + "+" + 3 + ")*4 = " + (2+3)*4    results is the string "(2+3)*4 = 20"
+std::string operator-(const std::string&s, const std::string&s1); //Example: "Hello World" - "Wor"  returns  "Hello ld"
+std::string operator-(const std::string&s, const char&c); //Example: "Hello World" - 'l'  returns  "Helo World"
+std::string operator*(const std::string&s, const unsigned&times); //Example "Hello"*3  returns  "HelloHelloHello"
+std::string operator!(const std::string&s); //Example: !"Hello World"  returns  "dlroW olleH"
+std::string operator++(const std::string&s); //Example: ++"Hello World" returns "HELLO WORLD"
+std::string operator--(const std::string&s); //Example: --"Hello World" returns "hello world"
+std::string operator<<(const std::string&s, const unsigned&i); //copy s and removes the last i characters
+std::string operator>>(const unsigned&i, const std::string&s); //copy s and removes the first i characters
+void operator<<(std::string&to, std::string&from); //removes the first word (characters separated by space[s]) from "from" and stores it in "to"
+/** End Operators declaration                                                          **/
+
 
 
 
@@ -110,6 +122,41 @@ std::string Remove(const std::string&s, const std::string&s2)
     return s;
 }
 
+std::string GetFirstWord(std::string & Statement)
+{
+    std::string FirstWord;
+    unsigned FirstChar, LastChar;
+    char WordState=0;
+    for(unsigned i=0; i<Statement.size(); i++)
+    {
+        if(!WordState)
+        {
+            if(Statement[i]!=' '&&Statement[i]!='\t'&&Statement[i]!='\r')
+            {
+                FirstChar=i;
+                WordState=1;
+                FirstWord+=Statement[i];
+            }
+        }
+        else if(WordState==1)
+        {
+            if(Statement[i]==' '||Statement[i]=='\t'||Statement[i]=='\r')//the last character in the word was passed
+            {
+                LastChar=(i-1);
+                WordState=2;
+                break;
+            }
+            else
+            {
+                FirstWord+=Statement[i];
+            }
+        }
+    }
+    if(WordState==2)Statement=CutStr(Statement, LastChar+2);
+    else Statement="";
+    return FirstWord;
+}
+
 
 
 std::string operator+(const std::string s, const int i)
@@ -171,41 +218,7 @@ std::string operator>>(const unsigned&i, const std::string&s)
     return CutStr(s, i, s.size()-1);
 }
 
-
-
-
-string GetFirstWord(string & Statement)
+void operator<<(std::string&to, std::string&from)
 {
-    string FirstWord;
-    unsigned FirstChar, LastChar;
-    BYTE WordState=0;
-    for(unsigned i=0; i<Statement.size(); i++)
-    {
-        if(!WordState)
-        {
-            if(Statement[i]!=' '&&Statement[i]!='\t'&&Statement[i]!='\r')
-            {
-                FirstChar=i;
-                WordState=1;
-                FirstWord+=Statement[i];
-            }
-        }
-        else if(WordState==1)
-        {
-            if(Statement[i]==' '||Statement[i]=='\t'||Statement[i]=='\r')//the last character in the word was passed
-            {
-                LastChar=(i-1);
-                WordState=2;
-                break;
-            }
-            else
-            {
-                FirstWord+=Statement[i];
-            }
-        }
-    }
-    if(WordState==2)Statement=CutStr(Statement, LastChar+2);
-    else Statement="";
-    return FirstWord;
+    to = GetFirstWord(from);
 }
-
