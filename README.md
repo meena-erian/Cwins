@@ -23,5 +23,5 @@ int main()
   s = ++(2>>s<<3) + "++ flexibility = " + 10 +"1" + (3>>s<<1)*7;
 }
 ```
-The final value of **s** is gooing to be "C++ flexibility = 101010101010101"
+The final value of **s** is gooing to be "***C++ flexibility = 101010101010101***"
 see [StringFormating.cpp](StringFormating.cpp) for more detailes about what you can do with [StringFormating.h](https://raw.githubusercontent.com/meena-hanna/Cwins/master/StringFormating.h).
