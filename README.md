@@ -9,8 +9,9 @@ Cwins is a general purpose C++ library for adding exta functionalities by provid
 ---
 ---
 ##StringFormating.h
-**Required Libraries:** \<sstream.h\>
-**Cross-Platform:** Yes
++ **Required Libraries:** \<sstream.h\>
++ **Cross-Platform:** Yes
+
 ###Description:
 StringFormating.h overloads operators of the standard std::string class for performing common tasks.
 ###Example
