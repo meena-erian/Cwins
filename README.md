@@ -1,6 +1,6 @@
 Cwins
 ===
-Cwins is a general purpose C++ library for adding exta functionalities by providing most commonly needed and commonly used functions, operators, datatypes and macro definitions. It consist of many separate header files, each will be described in detailes below.
+Cwins is a general purpose C++ library for adding extra functionalities by providing most commonly needed and commonly used functions, operators, datatypes and macro definitions. It consist of many separate header files, each will be described in detailes below.
 + License: [GNU GPL v3](LICENSE)
 + Created: 2016
 + Author: Meena Erian H
